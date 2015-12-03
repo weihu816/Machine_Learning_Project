@@ -57,8 +57,8 @@ load('test/test.mat');
 X_train = sparse([X_img_train X_word_train]);
 X_test = sparse([X_img_test X_word_test]);
 [~, ~, sigma] = zscore(X_train);
-X_train = X_train(sigma ~= 0);
-X_test = X_test(sigma ~= 0);
+X_train = X_train(:, sigma ~= 0);
+X_test = X_test(:, sigma ~= 0);
 
 clear X_images_train
 clear X_img_train
