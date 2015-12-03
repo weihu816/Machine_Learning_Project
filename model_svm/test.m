@@ -25,7 +25,7 @@ X_test = sparse([X_img_test X_word_test]);
 % results.intersect = kernel_libsvm(X, Y, Xtest, Ytest, k_intersection);
 
 %%
-addpath('./lib/libsvm');
+addpath('libsvm');
 k_intersection = @(x,x2) kernel_intersection(x, x2);
 
 K = k_intersection(X_train, X_train);
@@ -41,11 +41,9 @@ end
 
 fprintf('Cross-val chose best C = %g\n', crange(bestc));
 % Train and evaluate SVM classifier using libsvm
-model = svmtrain(Y_train, [(1:size(K,1))' K], sprintf('-t 4 -c %g', crange(bestc)));
+model = svmtrain(Y_train, [(1:size(K,1))' K], sprintf('-q -t 4 -c %g', crange(bestc)));
 Ytest = ones(size(X_test,1), 1);
 [yhat, acc, vals] = svmpredict(Ytest, [(1:size(Ktest,1))' Ktest], model);
-
-test_err = sum(yhat~=Ytest);
 
 dlmwrite('submit.txt', yhat);
 
