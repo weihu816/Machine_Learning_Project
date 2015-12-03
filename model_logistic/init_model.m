@@ -1,9 +1,9 @@
 function model = init_model()
 
-addpath('./lib/liblinear');
 load('model_logistic.mat');
 model = model_logistic;
 
+% addpath('liblinear');
 % X_img_train = importdata('../train/image_features_train.txt');
 % X_word_train = importdata('../train/words_train.txt');
 % Y_train = importdata('../train/genders_train.txt');

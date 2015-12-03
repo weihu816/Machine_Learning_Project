@@ -1,19 +1,3 @@
-%%
-X_img_train = importdata('../train/image_features_train.txt');
-X_word_train = importdata('../train/words_train.txt');
-Y_train = importdata('../train/genders_train.txt');
-
-% X_img_test = importdata('test/image_features_test.txt');
-% X_word_test = importdata('test/words_test.txt');
-
-X_img_test = X_img_train(3001:end, :);
-X_word_test = X_word_train(3001:end, :);
-Y_test = Y_train(3001:end, :);
-
-X_img_train = X_img_train(1:3000, :);
-X_word_train = X_word_train(1:3000, :);
-Y_train = Y_train(1:3000, :);
-'end1'
 %% start
 tic
 addpath('./lib/pca');
@@ -27,8 +11,8 @@ X_test = score_test1(:, 1:numpc1);
 
 model = train(Y_train, sparse([X_img_train X_word_train]), ['-s 7', 'col']);
 
-[predicted_label_train] = predict(Y_train, sparse([X_img_train X_word_train]), model, ['-q', 'col']);
-precision_train = 1 - sum(predicted_label_train~=Y_train) / length(Y_train);
+[predictions] = predict(Y_train, sparse([X_img_train X_word_train]), model, ['-q', 'col']);
+precision_train = 1 - sum(predictions~=Y_train) / length(Y_train);
 
 [predicted_label_test] = predict(Y_test, sparse([X_img_test X_word_test]), model, ['-q', 'col']);
 precision_test = 1 - sum(predicted_label_test~=Y_test) / length(Y_test)
@@ -47,8 +31,8 @@ addpath('./lib/liblinear');
 
 model = train(Y_train, sparse([X_img_train X_word_train]), '-s 0 -v 10 -q');
 
-[predicted_label_train] = predict(Y_train, sparse([X_img_train X_word_train]), model, ['-q', 'col']);
-precision_train = 1 - sum(predicted_label_train~=Y_train) / length(Y_train);
+[predictions] = predict(Y_train, sparse([X_img_train X_word_train]), model, ['-q', 'col']);
+precision_train = 1 - sum(predictions~=Y_train) / length(Y_train);
 
 B_first = mnrfit(sparse([X_img_train X_word_train]), Y_train + 1);
 predicted_label_train2 = 1 - predict(B_first, [ones(size(X_word,1),1) X_word]);
@@ -72,5 +56,28 @@ X = score_train(:, 1:numpc);
 
 model = train(Y_train, sparse(X), ['-s 2', 'col']);
 
-[predicted_label_train] = predict(Y_train, sparse(X), model, ['-q', 'col']);
-precision_train = 1 - sum(predicted_label_train~=Y_train) / length(Y_train);
+[predictions] = predict(Y_train, sparse(X), model, ['-q', 'col']);
+precision_train = 1 - sum(predictions~=Y_train) / length(Y_train);
+%% try different cost of logistic regression
+
+addpath('./lib/pca');
+
+[score_train1, score_test1, numpc1] = pca_getpc(X_word_train, X_word_test);
+[score_train2, score_test2, numpc2] = pca_getpc(X_img_train, X_img_test);
+
+X_train = score_train1(:, 1:numpc1);
+X_test = score_test1(:, 1:numpc1);
+
+
+%% test of logistic regression
+addpath('liblinear');
+model_type = [6 7];
+cost = 0.2:0.2:2.0;
+for s = model_type
+   for c = cost
+       train(Y_train, X_train, sprintf('-q -s %g -v 10 -c %g', s, c));
+       model = train(Y_train, X_train, sprintf('-q -s %g -c %g', s, c));
+       accuracy = mean(predict(Y_test, X_test, model, '-q') == Y_test);
+       fprintf('s = %g, c = %g, accuracy = %g\n', s, c, accuracy);
+   end
+end

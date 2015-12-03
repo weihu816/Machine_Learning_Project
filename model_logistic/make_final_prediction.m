@@ -9,4 +9,4 @@ function predictions = make_final_prediction(model,X_test)
 
 addpath('./lib/liblinear');
 
-predictions = predict(zeros(size(X_test, 1), 1), sparse(X_test), model, ['-q']);
+predictions = predict(zeros(size(X_test, 1), 1), sparse(X_test), model, '-q');

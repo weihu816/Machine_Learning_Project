@@ -39,7 +39,7 @@ for i = 1:numel(crange)
 end
 [~, bestc] = max(acc);
 
-fprintf('Cross-val chose best C = %g\n', crange(bestc));training_set_file
+fprintf('Cross-val chose best C = %g\n', crange(bestc));
 % Train and evaluate SVM classifier using libsvm
 model = svmtrain(Y_train, [(1:size(K,1))' K], sprintf('-t 4 -c %g', crange(bestc)));
 Ytest = ones(size(X_test,1), 1);
