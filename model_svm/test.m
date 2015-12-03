@@ -1,11 +1,4 @@
 %%
-load('./train/train.mat');
-load('./test/test.mat');
-
-X_train = sparse([X_img_train X_word_train]);
-X_test = sparse([X_img_test X_word_test]);
-
-%%
 % addpath('../lib/libsvm');
 % k_poly_linear = @(x,x2) kernel_poly(x, x2, 1);
 % k_poly_quadratic = @(x,x2) kernel_poly(x, x2, 2);
