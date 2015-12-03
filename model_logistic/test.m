@@ -71,13 +71,15 @@ X_test = score_test1(:, 1:numpc1);
 
 %% test of logistic regression
 addpath('liblinear');
-model_type = [6 7];
-cost = 0.2:0.2:2.0;
-for s = model_type
-   for c = cost
-       train(Y_train, X_train, sprintf('-q -s %g -v 10 -c %g', s, c));
-       model = train(Y_train, X_train, sprintf('-q -s %g -c %g', s, c));
+S = 0;
+cost = [0.5, 1, 1.5];
+P = [0.0001,0.001,0.01,0.1,1];
+E = [0.00001,0.0001,0.001,0.01,0.1,1];
+for p = P
+   for e = E
+       train(Y_train, X_train, sprintf('-q -s 0 -p %g -v 10 -e %g', p, e));
+       model = train(Y_train, X_train, sprintf('-q -s 0 -p %g -e %g', p, e));
        accuracy = mean(predict(Y_test, X_test, model, '-q') == Y_test);
-       fprintf('s = %g, c = %g, accuracy = %g\n', s, c, accuracy);
+       fprintf('p = %g, e = %g, accuracy = %g\n', p, e, accuracy);
    end
 end

@@ -35,6 +35,20 @@ clear Y
 clear X_images_train
 clear X_img_train
 clear X_word_train
+%%
+%% 
+load('train/train.mat');
+load('test/test.mat');
+
+X_train = sparse([X_img_train X_word_train]);
+X_test = sparse([X_img_test X_word_test]);
+
+clear X_images_train
+clear X_img_train
+clear X_word_train
+clear X_images_test
+clear X_img_test
+clear X_word_test
 %% 3000 training data and 2000 test data (original image)
 
 load('train/train.mat');
