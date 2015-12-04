@@ -43,28 +43,9 @@ precision_train2 = sum(prediction_first == Y_train) / length(Y_train);
 % Use turnin on the output file
 % turnin -c cis520 -p leaderboard submit.txt
 dlmwrite('submit.txt', predicted_label_test);
-
-%% For submission - PCAed Data
-load('../train/train.mat');
-load('../test/test.mat');
-addpath('../lib/pca');
-addpath('../lib/liblinear');
-
-[score_train, score_test, numpc] = pca_getpc([X_img_train X_word_train], [X_img_test X_word_test]);
-
-X = score_train(:, 1:numpc);
-
-model = train(Y_train, sparse(X), ['-s 2', 'col']);
-
-[predictions] = predict(Y_train, sparse(X), model, ['-q', 'col']);
-precision_train = 1 - sum(predictions~=Y_train) / length(Y_train);
-%% try different cost of logistic regression
-
+%%
 addpath('./lib/pca');
-
-[score_train1, score_test1, numpc1] = pca_getpc(X_word_train, X_word_test);
-[score_train2, score_test2, numpc2] = pca_getpc(X_img_train, X_img_test);
-
+[score_train1, score_test1, numpc1] = pca_getpc(X_train, X_test);
 X_train = score_train1(:, 1:numpc1);
 X_test = score_test1(:, 1:numpc1);
 
@@ -76,11 +57,11 @@ X_test = atan(X_test) * 2 / pi;
 %% 
 addpath('liblinear');
 S = 2;
-cost = 0.0012;
+cost = 0.0017;
 % 10.^(-5:1:1)
 % P = [0.0001,0.001,0.01,0.1,1];
 % E = [0.00001,0.0001,0.001,0.01,0.1,1];
-
+X_train = sparse(X_train);
 for s = S
    for c = cost
        train(Y_train, X_train, sprintf('-q -s %g -c %g -v 10', s, c));

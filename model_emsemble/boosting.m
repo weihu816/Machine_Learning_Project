@@ -4,7 +4,7 @@ load('../test/test.mat');
 X_train = [X_img_train X_word_train];
 X_test = [X_img_test X_word_test];
 
-model = fitensemble(X_train, Y_train, 'AdaBoostM1', 3000, 'Tree');
+model = fitensemble(X_train, Y_train, 'AdaBoostM1', 2000, 'Tree');
 prediction = predict(model, X_test);
 dlmwrite('submit.txt', prediction);
 
