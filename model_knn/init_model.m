@@ -1,7 +1,11 @@
 function model = init_model()
 
-load('w_ridge.mat');
-model.w_ridge = w_ridge;
+
+load('knn.mat');
+model = mdl;
+
+%load('w_ridge.mat');
+%model.w_ridge = w_ridge;
 
 % Example:
 % model.svmw = SVM.w;
