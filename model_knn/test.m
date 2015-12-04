@@ -1,5 +1,4 @@
-%reference: http://www.mathworks.com/help/stats/classification-using-nearest-neighbors.html#btap7k2
-
+%% load data
 X_img_train = importdata('../train/image_features_train.txt');
 X_word_train = importdata('../train/words_train.txt');
 Y_train = importdata('../train/genders_train.txt');
@@ -12,11 +11,11 @@ X_train = [X_word_train X_img_train];
 %normalization 1
 X_train = atan(X_train)*2/pi;
 
-%%
-%construct the classifier
+%% construct the knn classifier
 mdl = fitcknn(X_train, Y_train);
 
-for i=11:1:20
+%finding suitable k 
+for i=1:1:20
     %change neighbor size (default is 1): 
     mdl.NumNeighbors = i;
 
