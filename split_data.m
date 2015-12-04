@@ -59,7 +59,8 @@ X_test = sparse([X_img_test X_word_test]);
 [~, ~, sigma] = zscore(X_train);
 X_train = X_train(:, sigma ~= 0);
 X_test = X_test(:, sigma ~= 0);
-
+X_train = atan(X_train) * 2 / pi;
+X_test = atan(X_test) * 2 / pi;
 clear X_images_train
 clear X_img_train
 clear X_word_train

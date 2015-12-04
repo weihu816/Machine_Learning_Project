@@ -70,19 +70,22 @@ X_test = score_test1(:, 1:numpc1);
 
 
 %% test of logistic regression
+X_train = atan(X_train) * 2 / pi;
+X_test = atan(X_test) * 2 / pi;
+
+%% 
 addpath('liblinear');
-S = 0;
-cost = 0.06:0.02:1;
+S = 2;
+cost = 0.0012;
 % 10.^(-5:1:1)
 % P = [0.0001,0.001,0.01,0.1,1];
 % E = [0.00001,0.0001,0.001,0.01,0.1,1];
-X_train = atan(X_train) * 2 / pi;
-X_test = atan(X_test) * 2 / pi;
+
 for s = S
    for c = cost
        train(Y_train, X_train, sprintf('-q -s %g -c %g -v 10', s, c));
        model = train(Y_train, X_train, sprintf('-q -s %g -c %g', s, c));
-       fprintf('(%g,%g) -> %g\n', s, c, mean(predict(Y_test, X_test, model, '-q') == Y_test));
+       fprintf('(%g,%g) -> %g\n', s, c, mean(predict(Y_train, X_train, model, '-q') == Y_train));
    end
 end
 %  train(Y_train, X_train, '-q -s 0 -c 0.86 -v 10')
