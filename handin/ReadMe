@@ -22,6 +22,9 @@ The second section pre-computes 4 different kernels. The third section sets the 
 testautoencoder.m (semi-supervised dimensionality reduction):
 In this file, we do preprocessing of the data using auto-encoder method. Then we use the logistic regression model to fit the data and compare it with the original data.
 
+testautoencoder_image.m (semi-supervised dimensionality reduction):
+In this file, the X_train data are gray-scaled images. It first load the data and pre-process image data. Then it uses auto-encoder and logistic regression. We use cross validation to find the best parameter c. Then the model is used to predict and write result to file "submit.txt".
+
 testknn.m (instance based method):
 After loading all the data, training data and test data are first normalized. Then cross validation is used to find suitable k (this part is commented out). Next, a k-nearest beighbor classifer with neighbor number set to 16 is constructed. It then makes predictions on test data and prints the predicts to “submit.txt”.
 
