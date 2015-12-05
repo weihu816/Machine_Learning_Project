@@ -12,6 +12,7 @@ X_test = X_test(:,[35001:35007 1:5000]);
 X_test = X_test(:,model.index);
 P1 = predict(model.model1, full(X_test));
 
+X_test = sparse(X_test);
 addpath('libsvm');
 k_intersection = @(x,x2) kernel_intersection(x, x2);
 Ktest = k_intersection(model.X_train_svm, X_test);
