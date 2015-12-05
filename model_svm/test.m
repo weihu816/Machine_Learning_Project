@@ -29,7 +29,7 @@ K4_test = k_intersection(X_train, X_test);
 %%
 % set the kernel
 K = K4;
-Ktest = Ktest4;
+Ktest = K4_test;
 
 % Use libsvm cross validation to choose the C regularization parameter
 crange = 0.0001:0.0001:0.005;

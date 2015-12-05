@@ -15,6 +15,7 @@ P1 = predict(model.model1, full(X_test));
 X_test = sparse(X_test);
 addpath('libsvm');
 k_intersection = @(x,x2) kernel_intersection(x, x2);
+X_train = model.X_train_svm;
 Ktest = k_intersection(model.X_train_svm, X_test);
 [P2, ~, ~] = svmpredict(ones(size(X_test,1), 1), [(1:size(Ktest,1))' Ktest], model.model2);
 
