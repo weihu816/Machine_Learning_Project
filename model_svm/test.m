@@ -32,7 +32,7 @@ K = K4;
 Ktest = K4_test;
 
 % Use libsvm cross validation to choose the C regularization parameter
-crange = 0.0001:0.0001:0.005;
+crange = 0.0005:-0.00001:0;
 for i = 1:numel(crange)
     acc(i) = svmtrain(Y_train, [(1:size(K,1))' K], sprintf('-q -t 4 -v 10 -c %g', crange(i)));
 end
