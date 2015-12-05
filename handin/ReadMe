@@ -1,0 +1,28 @@
+The code and lib folder should be under the same directory as train and test folder.
+
+In lib folder:
+It contains all the libraries we used and some helper function.
+
+In code folder:
+testnaivebayes.m (generative method):
+In this file, we train a naive bayes model and use this model to predict the test data. 
+
+testreg.m (discriminative method):
+In this file, we do logistic regression. We use cross validation method to find a good parameter of the model, then we train the model and predict the data. Here we do normalization of the data, which can greatly speed up the code and improve the accuracy.
+
+boosting.m (discriminative method):
+The first section of the code imports the data and do normalization to data.
+The second section builds the Adaboost model and writes the prediction results to file “submit.txt”.
+The third section is the part where we do the combination of different boosting methods and get the average prediction result. The prediction result is then writen it to file "boosting_average.txt".
+
+testsvm.m (discriminative method):
+The first section of the code imports data.
+The second section pre-computes 4 different kernels. The third section sets the kernel model and different parameters of the kernel. Then cross validation is done to pick appropriate parameter. Then it writes the prediction results to file "submit.txt".
+
+testautoencoder.m (semi-supervised dimensionality reduction):
+In this file, we do preprocessing of the data using auto-encoder method. Then we use the logistic regression model to fit the data and compare it with the original data.
+
+testknn.m (instance based method):
+After loading all the data, training data and test data are first normalized. Then cross validation is used to find suitable k (this part is commented out). Next, a k-nearest beighbor classifer with neighbor number set to 16 is constructed. It then makes predictions on test data and prints the predicts to “submit.txt”.
+
+
