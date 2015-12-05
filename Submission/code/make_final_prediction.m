@@ -8,15 +8,13 @@ function predictions = make_final_prediction(model,X_test,X_train)
 % prediction : a nx1 which is your prediction of the test samples
 
 % we don't need image
-X_test_word = X_test(:,1:5000);
-X_test_word = X_test_word(:,model.index_svm);
 X_test = X_test(:,[35001:35007 1:5000]);
 X_test = X_test(:,model.index);
 P1 = predict(model.model1, full(X_test));
 
 addpath('libsvm');
 k_intersection = @(x,x2) kernel_intersection(x, x2);
-Ktest = k_intersection(model.X_train_svm, X_test_word);
+Ktest = k_intersection(model.X_train_svm, X_test);
 [P2, ~, ~] = svmpredict(ones(size(X_test,1), 1), [(1:size(Ktest,1))' Ktest], model.model2);
 
 addpath('liblinear');

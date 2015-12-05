@@ -11,4 +11,3 @@ model.model2 = model_svm;
 model.model3 = model_logistic;
 model.X_train_svm = X_train_svm;
 model.index = index;
-model.index_svm = index_svm;
