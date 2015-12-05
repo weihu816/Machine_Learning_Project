@@ -17,12 +17,12 @@ K = zeros(m, n);
 % column operations in matlab are MUCH faster than row operations.
 
 % YOUR CODE GOES HERE.
-X_transpose = sparse(X');
-X2_transpose = sparse(X2');
+X_transpose = X';
+X2_transpose = X2';
 
 for i = 1:m
 %     for j = 1:n
-%         K(i,j) = sum(min(X2_transpose(:, i), X_transpose(:, j)));
+%         K(i,j) = sum( bsxfun(@min, X2_transpose(:, i), X_transpose(:, j)) );
 %     end
-    K(:,i) = sum(bsxfun(@min,X_transpose(:,i),X2_transpose),1);
+    K(i, :) = sum(bsxfun(@min,X2_transpose(:,i),X_transpose),1);
 end

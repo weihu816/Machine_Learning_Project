@@ -1,9 +1,17 @@
-load('../train/train.mat');
-load('../test/test.mat');
+%% load data
+X_img_train = importdata('../train/image_features_train.txt');
+X_word_train = importdata('../train/words_train.txt');
+Y_train = importdata('../train/genders_train.txt');
 
-X_train = [X_img_train X_word_train];
-X_test = [X_img_test X_word_test];
+X_img_test = importdata('../test/image_features_test.txt');
+X_word_test = importdata('../test/words_test.txt');
 
+X_train = [X_word_train X_img_train];
+
+%normalization 1
+X_train = atan(X_train)*2/pi;
+
+%%
 model = fitensemble(X_train, Y_train, 'AdaBoostM1', 2000, 'Tree');
 prediction = predict(model, X_test);
 dlmwrite('submit.txt', prediction);
