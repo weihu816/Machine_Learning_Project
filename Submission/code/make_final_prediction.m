@@ -8,7 +8,7 @@ function predictions = make_final_prediction(model,X_test,X_train)
 % prediction : a nx1 which is your prediction of the test samples
 
 % we don't need image
-X_test = X_test(:,[35001:35007 1:5000]);
+X_test = X_test(:,[1:5000 35001:35007]);
 X_test = X_test(:,model.index);
 P1 = predict(model.model1, full(X_test));
 
