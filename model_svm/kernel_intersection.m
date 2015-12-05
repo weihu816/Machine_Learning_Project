@@ -24,5 +24,5 @@ for i = 1:m
 %     for j = 1:n
 %         K(i,j) = sum(min(X2_transpose(:, i), X_transpose(:, j)));
 %     end
-    K(i,:) = sum(bsxfun(@min,X_transpose(:,i),X2_transpose),1);
+    K(:,i) = sum(bsxfun(@min,X_transpose(:,i),X2_transpose),1);
 end
