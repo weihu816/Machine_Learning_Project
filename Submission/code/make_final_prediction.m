@@ -14,7 +14,7 @@ P1 = predict(model.model1, full(X_test));
 
 addpath('libsvm');
 k_intersection = @(x,x2) kernel_intersection(x, x2);
-Ktest = k_intersection(X_train, X_test);
+Ktest = k_intersection(model.X_train, X_test);
 [P2, ~, ~] = svmpredict(ones(size(X_test,1), 1), [(1:size(Ktest,1))' Ktest], model.model2);
 
 addpath('liblinear');
